@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afrocolombianidad — Historia y Resistencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --oro:#E8B84B;
+  --oro-claro:#F5D27A;
+  --rojo:#C0392B;
+  --rojo-oscuro:#8B1A11;
+  --azul:#1A3A6B;
+  --azul-claro:#2E5FA3;
+  --negro:#0D0A06;
+  --cafe:#3D1F0D;
+  --cafe-medio:#7B3F1A;
+  --crema:#FBF4E4;
+  --verde:#1B4332;
+  --verde-claro:#2D6A4F;
+  --texto:#1a0e05;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--negro);color:var(--crema);overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://th.bing.com/th/id/R.0066abacf6fdaefd594c7e3a8d12ef2f?rik=mB7J5OGaY85zDQ&riu=http%3a%2f%2fblog.redbus.co%2fwp-content%2fuploads%2f2019%2f08%2fPortada.jpg&ehk=jx7BqgJ2avywBw7w9M44Y86nIA09zeWQjTT7C9Y1SU0%3d&risl=&pid=ImgRaw&r=0');
+  background-size:cover;background-position:center;
+  filter:brightness(0.22) saturate(1.4);
+}
+.hero-gradient{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,10,6,0.3)0%,rgba(13,10,6,0)40%,rgba(13,10,6,0.9)100%)}
+.hero-pattern{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:repeating-linear-gradient(0deg,#E8B84B 0,#E8B84B 1px,transparent 0,transparent 40px),
+    repeating-linear-gradient(90deg,#E8B84B 0,#E8B84B 1px,transparent 0,transparent 40px);
+}
+.hero-content{position:relative;z-index:2;padding:2rem;max-width:900px}
+.hero-flag{display:flex;width:120px;height:6px;border-radius:3px;overflow:hidden;margin:0 auto 2.5rem}
+.hero-flag div:nth-child(1){flex:2;background:#FFCD00}
+.hero-flag div:nth-child(2){flex:1;background:#003087}
+.hero-flag div:nth-child(3){flex:1;background:#CE1126}
+.hero-eyebrow{font-size:.75rem;letter-spacing:.35em;text-transform:uppercase;color:var(--oro);margin-bottom:1.2rem;font-weight:500}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:700;
+  line-height:1.0;
+  color:#fff;
+  margin-bottom:.5rem;
+}
+.hero-title span{color:var(--oro);font-style:italic}
+.hero-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.2rem,3vw,2rem);
+  font-weight:400;
+  color:rgba(255,255,255,.65);
+  margin-bottom:2.5rem;
+  font-style:italic;
+}
+.hero-desc{
+  font-size:clamp(.9rem,1.8vw,1.05rem);
+  color:rgba(255,255,255,.55);
+  line-height:1.9;
+  max-width:600px;
+  margin:0 auto 3rem;
+}
+.btn-explorar{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--oro);color:var(--negro);
+  font-size:.9rem;font-weight:600;letter-spacing:.05em;
+  padding:.9rem 2.2rem;border-radius:50px;
+  text-decoration:none;transition:transform .2s,background .2s;
+  border:none;cursor:pointer;
+}
+.btn-explorar:hover{transform:translateY(-2px);background:var(--oro-claro)}
+.scroll-arrow{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  font-size:1.5rem;color:rgba(255,255,255,.3);
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,10,6,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(232,184,75,.15);
+  padding:.8rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:700;color:var(--oro);
+}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);text-decoration:none;
+  transition:color .2s;font-weight:500;
+}
+.nav-links a:hover{color:var(--oro)}
+
+/* ── SECCIONES ── */
+section{padding:5rem 0}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+
+/* ── SECCIÓN TÍTULO ── */
+.sec-eyebrow{
+  font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--oro);font-weight:500;margin-bottom:.8rem;display:block;
+}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;line-height:1.1;
+  margin-bottom:1.5rem;
+}
+.sec-divider{width:48px;height:3px;border-radius:2px;background:var(--oro);margin-bottom:2rem}
+.sec-body{font-size:clamp(.9rem,1.6vw,1rem);line-height:1.9;color:rgba(255,255,255,.72);max-width:700px}
+
+/* ── SECCIÓN CIMARRONAJE ── */
+.cimarronaje-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  min-height:600px;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(232,184,75,.1);
+}
+.cim-img{
+  position:relative;overflow:hidden;
+  background-image:url('https://tse1.mm.bing.net/th/id/OIP.S9AHoCV6axvsdUouKMbNmAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3');
+  background-size:cover;background-position:center;
+}
+.cim-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(13,10,6,.8))}
+.cim-texto{
+  background:var(--cafe);
+  padding:3.5rem;display:flex;flex-direction:column;justify-content:center;
+}
+.cim-texto .sec-body{color:rgba(251,244,228,.75)}
+.tag{
+  display:inline-block;
+  background:rgba(232,184,75,.15);
+  border:1px solid rgba(232,184,75,.3);
+  color:var(--oro);
+  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;margin-bottom:1.5rem;font-weight:500;
+}
+.highlight-box{
+  background:rgba(232,184,75,.08);
+  border-left:3px solid var(--oro);
+  padding:1.2rem 1.5rem;
+  border-radius:0 10px 10px 0;
+  margin:1.5rem 0;
+  font-style:italic;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;
+  color:var(--oro-claro);
+  line-height:1.5;
+}
+
+/* ── PALENQUES ── */
+.palenques-section{background:linear-gradient(180deg,var(--negro) 0%,var(--cafe) 30%,var(--negro) 100%)}
+.palenques-hero{
+  position:relative;height:500px;border-radius:20px;overflow:hidden;margin-bottom:4rem;
+  background-image:url('https://www.cartagenaexplorer.com/wp-content/uploads/2021/10/Depositphotos_273915966_DS-scaled.jpg');
+  background-size:cover;background-position:center;
+}
+.palenques-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(61,31,13,.95) 0%,rgba(61,31,13,.4) 60%,transparent 100%);
+}
+.palenques-hero-text{
+  position:absolute;bottom:2.5rem;left:2.5rem;right:2.5rem;z-index:2;
+}
+.palenques-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pcard{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(232,184,75,.12);
+  border-radius:16px;padding:2rem;
+  transition:border-color .3s,background .3s;
+}
+.pcard:hover{border-color:rgba(232,184,75,.35);background:rgba(232,184,75,.04)}
+.pcard-icon{font-size:2rem;margin-bottom:1rem}
+.pcard h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:700;color:var(--oro);margin-bottom:.8rem;
+}
+.pcard p{font-size:.9rem;line-height:1.8;color:rgba(255,255,255,.6)}
+
+/* ── TRATA TRANSATLÁNTICA ── */
+.trata-section{background:var(--negro)}
+.trata-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
+.trata-img{
+  border-radius:16px;overflow:hidden;
+  background-image:url('https://tse2.mm.bing.net/th/id/OIP.rIaAbmi230T5guV07V_gQAHaJl?rs=1&pid=ImgDetMain&o=7&rm=3');
+  background-size:cover;background-position:center;
+  height:500px;
+  border:1px solid rgba(232,184,75,.15);
+  position:relative;
+}
+.trata-img::after{content:'Rutas de la Trata Transatlántica';
+  position:absolute;bottom:1.5rem;left:1.5rem;
+  background:rgba(13,10,6,.75);color:var(--oro);
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 14px;border-radius:20px;font-weight:500;
+}
+.estadistica{
+  display:flex;align-items:baseline;gap:.5rem;margin:1.5rem 0;
+}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4rem);font-weight:700;color:var(--oro);line-height:1;
+}
+.stat-label{font-size:.85rem;color:rgba(255,255,255,.5);max-width:200px;line-height:1.4}
+
+/* ── AFROCOLOMBIANIDAD ── */
+.afro-section{
+  position:relative;overflow:hidden;
+}
+.afro-bg{
+  position:absolute;inset:0;
+  background-image:url('https://www.postposmo.com/wp-content/uploads/2020/07/CULTURA-AFROCOLOMBIANA-7.jpg');
+  background-size:cover;background-position:center top;
+  filter:brightness(.12) saturate(1.5);
+}
+.afro-content{position:relative;z-index:2;padding:6rem 0}
+.afro-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+.afro-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(232,184,75,.18);
+  border-radius:16px;padding:2rem;
+  backdrop-filter:blur(8px);
+}
+.afro-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:700;color:var(--oro);margin-bottom:1rem;
+}
+.afro-card p{font-size:.92rem;line-height:1.85;color:rgba(255,255,255,.65)}
+.afro-foto{
+  border-radius:16px;overflow:hidden;height:380px;
+  background-image:url('https://www.postposmo.com/wp-content/uploads/2020/07/CULTURA-AFROCOLOMBIANA-7.jpg');
+  background-size:cover;background-position:center;
+  border:2px solid rgba(232,184,75,.2);
+  position:relative;
+}
+.afro-foto-cap{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(13,10,6,.85));
+  padding:2rem 1.5rem 1.5rem;
+  font-size:.82rem;color:rgba(255,255,255,.6);
+  font-style:italic;
+}
+
+/* ── PREGUNTAS ── */
+.quiz-section{background:var(--cafe)}
+.quiz-grid{display:flex;flex-direction:column;gap:2rem;margin-top:3rem}
+.quiz-item{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(232,184,75,.15);
+  border-radius:16px;overflow:hidden;
+}
+.quiz-pregunta{
+  padding:1.8rem 2rem;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;font-weight:600;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .2s;
+}
+.quiz-pregunta:hover{background:rgba(232,184,75,.06)}
+.quiz-num{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--oro);color:var(--negro);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;
+  flex-shrink:0;margin-right:1rem;
+}
+.quiz-arrow{transition:transform .3s;font-size:1.2rem;color:var(--oro);flex-shrink:0}
+.quiz-body{display:none;padding:0 2rem 1.8rem;border-top:1px solid rgba(232,184,75,.1)}
+.quiz-body.open{display:block}
+.quiz-opciones{display:flex;flex-direction:column;gap:.7rem;margin-top:1.2rem}
+.opcion{
+  display:flex;align-items:center;gap:.9rem;
+  padding:.9rem 1.2rem;border-radius:10px;
+  border:1.5px solid rgba(255,255,255,.1);
+  cursor:pointer;transition:all .2s;font-size:.92rem;
+}
+.opcion:hover{border-color:var(--oro);background:rgba(232,184,75,.07)}
+.opcion.correcta{border-color:#2D6A4F;background:rgba(45,106,79,.2);color:#6fcf97}
+.opcion.incorrecta{border-color:var(--rojo);background:rgba(192,57,43,.1);opacity:.5}
+.opcion-letra{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.08);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:600;transition:background .2s;
+}
+.opcion:hover .opcion-letra{background:var(--oro);color:var(--negro)}
+.opcion.correcta .opcion-letra{background:#2D6A4F}
+.quiz-instruccion{font-size:.78rem;color:rgba(255,255,255,.35);font-style:italic;margin-top:1rem}
+.quiz-pregunta.active .quiz-arrow{transform:rotate(180deg)}
+
+/* ── VIDEO ── */
+.video-section{background:var(--negro);padding:5rem 0}
+.video-wrapper{
+  border-radius:20px;overflow:hidden;
+  aspect-ratio:16/9;max-width:800px;margin:2.5rem auto 0;
+  border:2px solid rgba(232,184,75,.2);
+  box-shadow:0 40px 80px rgba(0,0,0,.5);
+}
+.video-wrapper iframe{width:100%;height:100%;border:none;display:block}
+
+/* ── CIERRE ── */
+.cierre{
+  position:relative;overflow:hidden;
+  min-height:500px;display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.cierre-bg{
+  position:absolute;inset:0;
+  background-image:url('https://www.postposmo.com/wp-content/uploads/2020/07/CULTURA-AFROCOLOMBIANA-7.jpg');
+  background-size:cover;background-position:center;
+  filter:brightness(.15) saturate(1.5);
+}
+.cierre-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,58,107,.4),rgba(192,57,43,.3))}
+.cierre-content{position:relative;z-index:2;padding:5rem 2rem;max-width:700px}
+.cierre-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3.8rem);font-weight:700;
+  color:var(--oro);line-height:1.1;margin-bottom:1.5rem;
+}
+.cierre-text{font-size:1rem;line-height:1.9;color:rgba(255,255,255,.7);margin-bottom:2.5rem}
+.cierre-flag{display:flex;width:80px;height:5px;border-radius:3px;overflow:hidden;margin:0 auto 1.5rem}
+.cierre-flag div:nth-child(1){flex:2;background:#FFCD00}
+.cierre-flag div:nth-child(2){flex:1;background:#003087}
+.cierre-flag div:nth-child(3){flex:1;background:#CE1126}
+.cierre-tag{
+  display:inline-block;background:var(--oro);color:var(--negro);
+  font-weight:600;font-size:.88rem;padding:.9rem 2rem;border-radius:40px;
+  letter-spacing:.04em;
+}
+
+/* ── ANIMACIONES ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .cimarronaje-grid,.afro-grid,.trata-grid{grid-template-columns:1fr}
+  .palenques-cards{grid-template-columns:1fr}
+  .cim-img{height:280px}
+  .nav-links{display:none}
+}
+
+footer{
+  background:var(--negro);
+  border-top:1px solid rgba(232,184,75,.1);
+  padding:2rem;text-align:center;
+  font-size:.78rem;color:rgba(255,255,255,.25);
+  letter-spacing:.05em;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-flag"><div></div><div></div><div></div></div>
+    <p class="hero-eyebrow">Historia · Resistencia · Identidad</p>
+    <h1 class="hero-title">Cimarronaje,<br>Palenques y<br><span>Afrocolombianidad</span></h1>
+    <p class="hero-subtitle">La lucha por la libertad que forjó Colombia</p>
+    <p class="hero-desc">Una exploración profunda de la resistencia afrodescendiente, sus comunidades libres, su legado histórico y su presencia cultural viva en la Colombia de hoy.</p>
+    <a href="#cimarronaje" class="btn-explorar">Explorar ↓</a>
+  </div>
+  <div class="scroll-arrow">↓</div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Afrocolombianidad</div>
+  <ul class="nav-links">
+    <li><a href="#cimarronaje">Cimarronaje</a></li>
+    <li><a href="#palenques">Palenques</a></li>
+    <li><a href="#trata">Trata</a></li>
+    <li><a href="#identidad">Identidad</a></li>
+    <li><a href="#quiz">Preguntas</a></li>
+    <li><a href="#video">Video</a></li>
+  </ul>
+</nav>
+
+<!-- CIMARRONAJE -->
+<section id="cimarronaje" style="background:var(--negro);padding:5rem 0">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-eyebrow">Concepto fundamental</span>
+      <h2 class="sec-title">¿Qué fue el Cimarronaje?</h2>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="cimarronaje-grid reveal">
+      <div class="cim-img"></div>
+      <div class="cim-texto">
+        <span class="tag">Siglos XVI – XIX</span>
+        <p style="font-size:.95rem;line-height:1.9;color:rgba(251,244,228,.72);margin-bottom:1.2rem">
+          El <strong style="color:var(--oro)">cimarronaje</strong> fue una forma de resistencia activa desarrollada por personas africanas esclavizadas durante la época colonial en América. Lejos de ser un simple acto de huida, representaba una ruptura radical con el sistema de dominación esclavista.
+        </p>
+        <div class="highlight-box">
+          "Los cimarrones no solo escapaban de sus amos — construían un mundo nuevo donde la libertad era posible."
+        </div>
+        <p style="font-size:.92rem;line-height:1.9;color:rgba(251,244,228,.65);margin-bottom:1.2rem">
+          Los esclavizados que lograban escapar, conocidos como <strong style="color:var(--oro-claro)">cimarrones</strong>, organizaban redes clandestinas, practicaban sabotajes, mantenían lenguas propias y preservaban rituales africanos. Su valentía demostró que la opresión nunca fue aceptada pasivamente.
+        </p>
+        <p style="font-size:.92rem;line-height:1.9;color:rgba(251,244,228,.65)">
+          Este fenómeno se extendió por toda América — desde Jamaica hasta Brasil, desde Cuba hasta Colombia — convirtiéndose en uno de los movimientos de liberación más importantes de la historia humana.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PALENQUES -->
+<section id="palenques" class="palenques-section">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-eyebrow">Comunidades libres</span>
+      <h2 class="sec-title">Los Palenques</h2>
+      <div class="sec-divider"></div>
+      <p class="sec-body" style="margin-bottom:3rem">Asentamientos fundados por cimarrones que habían escapado, los palenques fueron los primeros espacios de libertad real en América. Se construían en territorios de difícil acceso — montañas, selvas y ciénagas — como barricada natural contra los colonizadores.</p>
+    </div>
+    <div class="palenques-hero reveal">
+      <div class="palenques-hero-overlay"></div>
+      <div class="palenques-hero-text">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;color:#fff;margin-bottom:.5rem">San Basilio de Palenque</h3>
+        <p style="font-size:.9rem;color:rgba(255,255,255,.65);max-width:550px">El primer pueblo libre de América, ubicado en el departamento de Bolívar, Colombia. Declarado Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO en 2005. Conserva una lengua propia — el palenquero — única en el mundo por su mezcla de español con lenguas africanas bantú.</p>
+      </div>
+    </div>
+    <div class="palenques-cards reveal">
+      <div class="pcard">
+        <div class="pcard-icon">🏘️</div>
+        <h3>Organización social</h3>
+        <p>Los palenques tenían estructuras propias de gobierno, lideradas por capitanes elegidos por la comunidad. Desarrollaron sistemas de justicia y convivencia completamente independientes del dominio colonial.</p>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">🌿</div>
+        <h3>Ubicación estratégica</h3>
+        <p>Se asentaban en zonas montañosas, selváticas o pantanosas del Caribe y el Pacífico: Chocó, Valle del Cauca, Cauca, Nariño y Bolívar. La geografía era su aliada natural contra las incursiones militares coloniales.</p>
+      </div>
+      <div class="pcard">
+        <div class="pcard-icon">🥁</div>
+        <h3>Cultura preservada</h3>
+        <p>En los palenques se conservaron lenguas africanas, rituales espirituales, música de tambores, danzas ceremoniales y sistemas médicos tradicionales que hasta hoy sobreviven en comunidades afrocolombianas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRATA TRANSATLÁNTICA -->
+<section id="trata" class="trata-section" style="padding:5rem 0">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-eyebrow">Contexto histórico</span>
+      <h2 class="sec-title">La Trata Transatlántica</h2>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="trata-grid reveal">
+      <div>
+        <p class="sec-body" style="margin-bottom:2rem">
+          Entre los siglos XVI y XIX, el comercio triangular entre Europa, África y América forzó el desplazamiento de millones de personas africanas a través del océano Atlántico en condiciones de extrema crueldad. Este proceso, conocido como la <strong style="color:var(--oro)">trata transatlántica</strong> o "tráfico negrero", fue uno de los crímenes más grandes de la historia de la humanidad.
+        </p>
+        <div class="estadistica">
+          <span class="stat-num">12.5M</span>
+          <span class="stat-label">personas africanas embarcadas forzosamente hacia América</span>
+        </div>
+        <div class="estadistica">
+          <span class="stat-num">400</span>
+          <span class="stat-label">años que duró el comercio esclavista transatlántico</span>
+        </div>
+        <div class="estadistica">
+          <span class="stat-num">200K+</span>
+          <span class="stat-label">africanos esclavizados que llegaron a Colombia</span>
+        </div>
+        <p style="font-size:.92rem;line-height:1.85;color:rgba(255,255,255,.6);margin-top:1.8rem">
+          Las personas eran capturadas en África occidental y central — principalmente en los actuales territorios de Angola, Congo, Nigeria y Senegal — y transportadas en barcos negreros llamados "tumbeiros" (ataúdes flotantes). Las condiciones eran inhumanas: hacinamiento, enfermedad, violencia y muerte durante la travesía.<br><br>
+          En Colombia, los africanos esclavizados trabajaban en minas de oro del Pacífico, haciendas del Caribe y plantaciones del interior. Pese a estas condiciones, mantuvieron vivas sus tradiciones, lenguas y espiritualidad — semillas de lo que hoy conocemos como afrocolombianidad.
+        </p>
+      </div>
+      <div class="trata-img"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AFROCOLOMBIANIDAD -->
+<section id="identidad" class="afro-section">
+  <div class="afro-bg"></div>
+  <div class="afro-content">
+    <div class="container">
+      <div class="reveal">
+        <span class="sec-eyebrow">Identidad viva</span>
+        <h2 class="sec-title">Afrocolombianidad</h2>
+        <div class="sec-divider"></div>
+        <p class="sec-body">La afrocolombianidad no es solo historia — es una identidad cultural activa y en permanente transformación. Representa la síntesis de la herencia africana con las experiencias vividas en el territorio colombiano a lo largo de siglos de resistencia, creación y adaptación.</p>
+      </div>
+      <div class="afro-grid reveal">
+        <div>
+          <div class="afro-foto">
+            <div class="afro-foto-cap">Comunidades afrocolombianas mantienen vivas sus tradiciones en danzas, música y celebraciones culturales.</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.2rem">
+          <div class="afro-card">
+            <h3>🎶 Música y danza</h3>
+            <p>El currulao, la mapalé, el bullerengue y el vallenato tienen raíces directas en tradiciones africanas. Los tambores — palma y alegre — son instrumentos sagrados que conectan con los ancestros y definen el alma sonora de Colombia.</p>
+          </div>
+          <div class="afro-card">
+            <h3>🍲 Gastronomía</h3>
+            <p>El sancocho, el arroz con coco, los patacones y los dulces de panela son expresiones directas de la cocina afrocolombiana. En el Pacífico y el Caribe, la gastronomía preserva técnicas y sabores de origen africano mezclados con ingredientes americanos.</p>
+          </div>
+          <div class="afro-card">
+            <h3>🌍 Diversidad territorial</h3>
+            <p>Más de 4 millones de colombianos se reconocen como afrodescendientes. Se concentran principalmente en Chocó, Valle del Cauca, Cauca, Nariño, Córdoba y la costa Caribe — regiones donde la cultura afrocolombiana es el eje de la vida comunitaria.</p>
+          </div>
+          <div class="afro-card">
+            <h3>⚖️ Derechos y reconocimiento</h3>
+            <p>La Constitución de 1991 reconoció por primera vez los derechos territoriales y culturales de las comunidades afrocolombianas. La Ley 70 de 1993 consolidó ese reconocimiento, protegiendo sus territorios colectivos y su autonomía cultural.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="quiz-section" style="padding:5rem 0">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-eyebrow">Evaluación interactiva</span>
+      <h2 class="sec-title">Preguntas de reflexión</h2>
+      <div class="sec-divider"></div>
+      <p class="sec-body">Haz clic en cada pregunta para desplegarla y selecciona la respuesta correcta.</p>
+    </div>
+    <div class="quiz-grid reveal">
+
+      <div class="quiz-item">
+        <div class="quiz-pregunta" onclick="toggleQuiz(this)">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div class="quiz-num">1</div>
+            <span>¿Qué era el cimarronaje?</span>
+          </div>
+          <span class="quiz-arrow">▾</span>
+        </div>
+        <div class="quiz-body">
+          <div class="quiz-opciones">
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">A</div><span>Un tipo de comercio colonial entre Europa y América</span></div>
+            <div class="opcion" onclick="responder(this,true)"><div class="opcion-letra">B</div><span>Una forma de resistencia activa de las personas esclavizadas</span></div>
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">C</div><span>Una institución política del gobierno colonial</span></div>
+          </div>
+          <p class="quiz-instruccion">Selecciona la respuesta y justifica tu elección con lo aprendido.</p>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-pregunta" onclick="toggleQuiz(this)">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div class="quiz-num">2</div>
+            <span>¿Qué eran los palenques?</span>
+          </div>
+          <span class="quiz-arrow">▾</span>
+        </div>
+        <div class="quiz-body">
+          <div class="quiz-opciones">
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">A</div><span>Lugares donde vivían los colonizadores españoles</span></div>
+            <div class="opcion" onclick="responder(this,true)"><div class="opcion-letra">B</div><span>Comunidades libres fundadas por cimarrones que escapaban</span></div>
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">C</div><span>Barcos utilizados para el transporte de mercancías</span></div>
+          </div>
+          <p class="quiz-instruccion">Justifica tu respuesta con base en lo aprendido.</p>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-pregunta" onclick="toggleQuiz(this)">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div class="quiz-num">3</div>
+            <span>¿De dónde provenían las personas esclavizadas que llegaron a América?</span>
+          </div>
+          <span class="quiz-arrow">▾</span>
+        </div>
+        <div class="quiz-body">
+          <div class="quiz-opciones">
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">A</div><span>Europa occidental</span></div>
+            <div class="opcion" onclick="responder(this,true)"><div class="opcion-letra">B</div><span>África occidental y central</span></div>
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">C</div><span>Asia meridional</span></div>
+          </div>
+          <p class="quiz-instruccion">Explica brevemente tu elección.</p>
+        </div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-pregunta" onclick="toggleQuiz(this)">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div class="quiz-num">4</div>
+            <span>¿Qué representa la afrocolombianidad hoy en día?</span>
+          </div>
+          <span class="quiz-arrow">▾</span>
+        </div>
+        <div class="quiz-body">
+          <div class="quiz-opciones">
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">A</div><span>Solo un hecho histórico del pasado colonial</span></div>
+            <div class="opcion" onclick="responder(this,true)"><div class="opcion-letra">B</div><span>Una identidad cultural viva y en constante evolución</span></div>
+            <div class="opcion" onclick="responder(this,false)"><div class="opcion-letra">C</div><span>Un tipo de idioma regional colombiano</span></div>
+          </div>
+          <p class="quiz-instruccion">Argumenta tu respuesta con ejemplos concretos.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video" class="video-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="sec-eyebrow">Material complementario</span>
+      <h2 class="sec-title" style="text-align:center">Video recomendado</h2>
+      <div class="sec-divider" style="margin:0 auto 1rem"></div>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:500px;margin:0 auto">Documental sobre la afrocolombianidad, su origen, importancia y expresión cultural en la Colombia actual.</p>
+    </div>
+    <div class="video-wrapper reveal">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/3t0YwXxW0Xc?rel=0&modestbranding=1"
+        title="Afrocolombianidad"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section class="cierre">
+  <div class="cierre-bg"></div>
+  <div class="cierre-overlay"></div>
+  <div class="cierre-content reveal">
+    <div class="cierre-flag"><div></div><div></div><div></div></div>
+    <h2 class="cierre-title">Libertad, Dignidad<br>y Memoria Viva</h2>
+    <p class="cierre-text">El cimarronaje y los palenques son ejemplos eternos de la lucha humana por la libertad y la dignidad. Hoy, la afrocolombianidad sigue siendo una parte esencial e irrenunciable de la identidad colombiana. Reconocer su valor es un acto de justicia histórica y un compromiso con una Colombia más inclusiva, justa y diversa.</p>
+    <span class="cierre-tag">Colombia plural · Colombia libre · Colombia diversa</span>
+  </div>
+</section>
+
+<footer>
+  <p>Trabajo académico sobre Cimarronaje, Palenques y Afrocolombianidad &nbsp;·&nbsp; Historia de Colombia</p>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Quiz accordion
+function toggleQuiz(el){
+  const body=el.nextElementSibling;
+  const isOpen=body.classList.contains('open');
+  document.querySelectorAll('.quiz-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.quiz-pregunta').forEach(p=>p.classList.remove('active'));
+  if(!isOpen){body.classList.add('open');el.classList.add('active')}
+}
+
+// Responder preguntas
+function responder(el,correcta){
+  const opciones=el.closest('.quiz-opciones').querySelectorAll('.opcion');
+  if(el.classList.contains('correcta')||el.classList.contains('incorrecta'))return;
+  opciones.forEach(o=>o.onclick=null);
+  el.classList.add(correcta?'correcta':'incorrecta');
+}
+</script>
+</body>
+</html>
