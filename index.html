@@ -205,15 +205,15 @@ section{padding:5rem 0}
 .trata-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center}
 .trata-img{
   border-radius:16px;overflow:hidden;
-  background-image:url('https://tse2.mm.bing.net/th/id/OIP.rIaAbmi230T5guV07V_gQAHaJl?rs=1&pid=ImgDetMain&o=7&rm=3');
+  background-image:url('https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg');
   background-size:cover;background-position:center;
   height:500px;
   border:1px solid rgba(232,184,75,.15);
   position:relative;
 }
-.trata-img::after{content:'Rutas de la Trata Transatlántica';
+.trata-img::after{content:'Mapa de las Rutas de la Trata Transatlántica — ONU';
   position:absolute;bottom:1.5rem;left:1.5rem;
-  background:rgba(13,10,6,.75);color:var(--oro);
+  background:rgba(13,10,6,.82);color:var(--oro);
   font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
   padding:6px 14px;border-radius:20px;font-weight:500;
 }
@@ -261,6 +261,21 @@ section{padding:5rem 0}
   background:linear-gradient(transparent,rgba(13,10,6,.85));
   padding:2rem 1.5rem 1.5rem;
   font-size:.82rem;color:rgba(255,255,255,.6);
+  font-style:italic;
+}
+.afro-foto2{
+  border-radius:16px;overflow:hidden;height:260px;
+  background-image:url('https://programaacua.org/wp-content/uploads/2018/10/004.jpg');
+  background-size:cover;background-position:center;
+  border:2px solid rgba(232,184,75,.2);
+  position:relative;
+  margin-top:1.2rem;
+}
+.afro-foto2-cap{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(13,10,6,.88));
+  padding:1.8rem 1.5rem 1.2rem;
+  font-size:.8rem;color:rgba(255,255,255,.65);
   font-style:italic;
 }
 
@@ -315,12 +330,57 @@ section{padding:5rem 0}
 /* ── VIDEO ── */
 .video-section{background:var(--negro);padding:5rem 0}
 .video-wrapper{
+  position:relative;
   border-radius:20px;overflow:hidden;
-  aspect-ratio:16/9;max-width:800px;margin:2.5rem auto 0;
+  max-width:800px;margin:2.5rem auto 0;
   border:2px solid rgba(232,184,75,.2);
   box-shadow:0 40px 80px rgba(0,0,0,.5);
+  aspect-ratio:16/9;
+  cursor:pointer;
+  background:#000;
 }
-.video-wrapper iframe{width:100%;height:100%;border:none;display:block}
+.video-thumb{
+  position:absolute;inset:0;
+  background-image:url('https://img.youtube.com/vi/ZDQRf3ToSZQ/maxresdefault.jpg');
+  background-size:cover;background-position:center;
+  transition:transform .5s ease,filter .4s ease;
+  filter:brightness(.82);
+}
+.video-wrapper:hover .video-thumb{transform:scale(1.03);filter:brightness(.65)}
+.video-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 60%);
+}
+.video-play-btn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(232,184,75,.95);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s ease,background .3s ease,box-shadow .3s ease;
+  box-shadow:0 0 0 0 rgba(232,184,75,.4);
+  animation:pulse-ring 2.4s ease-out infinite;
+}
+.video-wrapper:hover .video-play-btn{
+  transform:translate(-50%,-50%) scale(1.1);
+  background:rgba(245,210,122,1);
+  box-shadow:0 8px 32px rgba(232,184,75,.5);
+}
+.video-play-btn svg{
+  width:32px;height:32px;fill:var(--negro);margin-left:4px;
+}
+@keyframes pulse-ring{
+  0%{box-shadow:0 0 0 0 rgba(232,184,75,.5)}
+  70%{box-shadow:0 0 0 22px rgba(232,184,75,0)}
+  100%{box-shadow:0 0 0 0 rgba(232,184,75,0)}
+}
+.video-label{
+  position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);font-weight:500;white-space:nowrap;
+}
+.video-wrapper iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:none;display:none;
+}
 
 /* ── CIERRE ── */
 .cierre{
@@ -519,6 +579,9 @@ footer{
           <div class="afro-foto">
             <div class="afro-foto-cap">Comunidades afrocolombianas mantienen vivas sus tradiciones en danzas, música y celebraciones culturales.</div>
           </div>
+          <div class="afro-foto2">
+            <div class="afro-foto2-cap">Uno de los platos típicos afrocolombianos — gastronomía viva del Pacífico y el Caribe.</div>
+          </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:1.2rem">
           <div class="afro-card">
@@ -639,9 +702,16 @@ footer{
       <div class="sec-divider" style="margin:0 auto 1rem"></div>
       <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:500px;margin:0 auto">Documental sobre la afrocolombianidad, su origen, importancia y expresión cultural en la Colombia actual.</p>
     </div>
-    <div class="video-wrapper reveal">
+    <div class="video-wrapper reveal" id="videoPlayer" onclick="playVideo()">
+      <div class="video-thumb" id="videoThumb"></div>
+      <div class="video-overlay"></div>
+      <div class="video-play-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <span class="video-label">▶ &nbsp; Ver documental</span>
       <iframe
-        src="https://www.youtube-nocookie.com/embed/3t0YwXxW0Xc?rel=0&modestbranding=1"
+        id="videoIframe"
+        src=""
         title="Afrocolombianidad"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
@@ -673,6 +743,21 @@ const obs = new IntersectionObserver(entries=>{
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+// Video player con vista previa
+function playVideo(){
+  const player=document.getElementById('videoPlayer');
+  const iframe=document.getElementById('videoIframe');
+  const thumb=document.getElementById('videoThumb');
+  if(iframe.style.display==='block')return;
+  iframe.src='https://www.youtube-nocookie.com/embed/ZDQRf3ToSZQ?rel=0&modestbranding=1&autoplay=1';
+  iframe.style.display='block';
+  thumb.style.display='none';
+  player.querySelector('.video-play-btn').style.display='none';
+  player.querySelector('.video-overlay').style.display='none';
+  player.querySelector('.video-label').style.display='none';
+  player.style.cursor='default';
+}
+
 // Quiz accordion
 function toggleQuiz(el){
   const body=el.nextElementSibling;
@@ -692,3 +777,4 @@ function responder(el,correcta){
 </script>
 </body>
 </html>
+
