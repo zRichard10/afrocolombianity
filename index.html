@@ -1358,18 +1358,21 @@ footer em{color:rgba(212,168,67,0.4);font-style:normal}
     <div class="slide" id="slide-3">
       <section id="trata" class="trata-section">
 
-        <!-- Video Background (ping-pong: dos videos con crossfade) -->
+        <!-- Video Background -->
         <div class="trata-video-bg">
-          <video id="pp-vid-a" muted playsinline preload="auto"
-            poster="https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg"
-            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.8);transition:opacity 1.2s ease;opacity:1">
-            <source src="13739319_1920_1080_30fps.mp4" type="video/mp4">
+          <video id="trata-vid" autoplay muted loop playsinline preload="auto"
+            poster="https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg">
+            <source src="videoafro.mp4" type="video/mp4">
           </video>
-          <video id="pp-vid-b" muted playsinline preload="auto"
-            poster="https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg"
-            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.8);transition:opacity 1.2s ease;opacity:0">
-            <source src="13739319_1920_1080_30fps.mp4" type="video/mp4">
-          </video>
+          <!-- Overlay de fade para disimular el corte del loop -->
+          <div id="trata-fade" style="
+            position:absolute;inset:0;
+            background:#000;
+            opacity:0;
+            pointer-events:none;
+            transition:opacity 0.9s ease;
+            z-index:1;
+          "></div>
         </div>
         <div class="trata-video-overlay"></div>
         <div class="trata-video-overlay2"></div>
@@ -1827,97 +1830,43 @@ setTimeout(() => {
 }, 100);
 
 /* ═════════════════════════════════════════
-   PING-PONG VIDEO
-   Compatible con Safari/iPhone:
-   - Sin playbackRate negativo
-   - Dos videos con crossfade suave:
-     Vid A: 0→fin (forward)
-     Cuando termina → Vid B ya cargado al final,
-     busca hacia atrás frame a frame con rAF
-     mientras Vid A hace fade out
-   - Cuando B llega a 0 → vuelve a A (forward)
+   VIDEO LOOP FADE
+   Fade a negro antes de que el video reinicie
+   para que el corte del loop sea invisible.
 ═════════════════════════════════════════ */
-(function initPingPong(){
-  const vidA = document.getElementById('pp-vid-a');
-  const vidB = document.getElementById('pp-vid-b');
-  if(!vidA || !vidB) return;
+(function initVideoFade(){
+  const vid  = document.getElementById('trata-vid');
+  const fade = document.getElementById('trata-fade');
+  if(!vid || !fade) return;
 
-  // Estado: 'forward' = A jugando, 'reverse' = B retrocediendo
-  let phase = 'forward';  // 'forward' | 'reverse'
-  let rafId = null;
-  const STEP = 0.04; // segundos a retroceder por frame (~30fps)
-  const FADE_DURATION = 1200; // ms, igual que CSS transition
+  // Segundos antes del final en los que se inicia el fade-out
+  const FADE_BEFORE = 1.2; // s
+  // Duráción del fade-in tras el reinicio
+  const FADE_IN_DELAY = 400; // ms
 
-  function setOpacity(a, b){
-    vidA.style.opacity = a;
-    vidB.style.opacity = b;
-  }
+  let fading = false;
 
-  function stopRaf(){
-    if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
-  }
+  vid.addEventListener('timeupdate', () => {
+    if(!vid.duration) return;
+    const remaining = vid.duration - vid.currentTime;
 
-  // --- Fase FORWARD: A juega hacia adelante ---
-  function startForward(){
-    phase = 'forward';
-    stopRaf();
-    vidA.currentTime = 0;
-    setOpacity(1, 0);
-    vidA.play().catch(()=>{});
-    // Preparar B al final para reverse
-    vidB.pause();
-  }
-
-  // Cuando A termina → crossfade a B que retrocede
-  vidA.addEventListener('ended', () => {
-    if(phase !== 'forward') return;
-    // Posicionar B al final
-    vidB.currentTime = vidA.duration || vidB.duration || 0;
-    // Crossfade: A fade out, B fade in
-    setOpacity(0, 1);
-    phase = 'reverse';
-    // Pequeña pausa para que la transición CSS se inicie
-    setTimeout(startReverse, 50);
+    if(!fading && remaining <= FADE_BEFORE){
+      // Iniciar fade a negro
+      fading = true;
+      fade.style.opacity = '1';
+    }
   });
 
-  // --- Fase REVERSE: B retrocede frame a frame ---
-  let lastTime = null;
-  function startReverse(){
-    lastTime = null;
-    rafId = requestAnimationFrame(reverseStep);
-  }
-
-  function reverseStep(ts){
-    if(phase !== 'reverse') return;
-    if(lastTime !== null){
-      const elapsed = (ts - lastTime) / 1000; // segundos
-      vidB.currentTime = Math.max(0, vidB.currentTime - elapsed);
+  // Cuando el video reinicia (loop), el currentTime vuelve a ~0
+  vid.addEventListener('seeked', () => {
+    if(fading && vid.currentTime < 1){
+      // Esperar un momento y luego aparecer
+      setTimeout(() => {
+        fade.style.opacity = '0';
+        fading = false;
+      }, FADE_IN_DELAY);
     }
-    lastTime = ts;
-
-    if(vidB.currentTime <= 0.05){
-      // Llegamos al inicio → crossfade de vuelta a A
-      stopRaf();
-      vidB.currentTime = 0;
-      setOpacity(1, 0);
-      setTimeout(startForward, FADE_DURATION * 0.3);
-      return;
-    }
-    rafId = requestAnimationFrame(reverseStep);
-  }
-
-  // Esperar a que los videos puedan reproducirse
-  function tryStart(){
-    startForward();
-  }
-
-  if(vidA.readyState >= 3){
-    tryStart();
-  } else {
-    vidA.addEventListener('canplay', tryStart, {once: true});
-    vidA.load();
-    vidB.load();
-  }
+  });
 })();
 
 /* ═════════════════════════════════════════
