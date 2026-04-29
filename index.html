@@ -1096,9 +1096,92 @@ footer em{color:rgba(212,168,67,0.4);font-style:normal}
    SELECTION
 ═══════════════════════════════════════════ */
 ::selection{background:rgba(212,168,67,0.3);color:var(--crema)}
+
+/* ═══════════════════════════════════════════
+   AUDIO BUTTON
+═══════════════════════════════════════════ */
+#audio-btn{
+  position:fixed;
+  bottom:5.2rem;
+  right:2rem;
+  z-index:2000;
+  width:44px;height:44px;
+  border-radius:50%;
+  background:rgba(20,12,6,0.82);
+  border:1px solid rgba(212,168,67,0.28);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  transition:transform 0.3s var(--ease-spring),
+             background 0.25s,
+             border-color 0.25s,
+             box-shadow 0.3s;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  outline:none;
+  -webkit-tap-highlight-color:transparent;
+}
+#audio-btn:hover{
+  background:rgba(212,168,67,0.15);
+  border-color:rgba(212,168,67,0.55);
+  transform:scale(1.1);
+  box-shadow:0 8px 32px rgba(212,168,67,0.2);
+}
+#audio-btn:active{transform:scale(0.96)}
+#audio-btn svg{
+  width:18px;height:18px;
+  fill:none;
+  stroke:var(--oro-suave);
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:stroke 0.25s,opacity 0.25s;
+}
+#audio-btn.muted svg{stroke:rgba(255,255,255,0.3)}
+#audio-btn .audio-ripple{
+  position:absolute;
+  width:44px;height:44px;
+  border-radius:50%;
+  border:1px solid rgba(212,168,67,0.35);
+  animation:audio-ripple-anim 2s ease-out infinite;
+  pointer-events:none;
+  opacity:0;
+}
+#audio-btn.playing .audio-ripple{
+  opacity:1;
+}
+@keyframes audio-ripple-anim{
+  0%{transform:scale(1);opacity:0.5}
+  100%{transform:scale(1.9);opacity:0}
+}
+@media(max-width:768px){
+  #audio-btn{bottom:4.8rem;right:1.4rem;width:40px;height:40px}
+}
 </style>
 </head>
 <body>
+
+<!-- ═══ AUDIO ═══ -->
+<audio id="bg-audio" loop preload="auto" playsinline>
+  <source src="audioafrocolombianidad.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ═══ AUDIO BUTTON ═══ -->
+<button id="audio-btn" class="muted" aria-label="Activar sonido" title="Activar sonido">
+  <div class="audio-ripple"></div>
+  <!-- Speaker icon (muted state) -->
+  <svg id="icon-muted" viewBox="0 0 24 24">
+    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+  <!-- Speaker icon (playing state) -->
+  <svg id="icon-playing" viewBox="0 0 24 24" style="display:none">
+    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+  </svg>
+</button>
 
 <!-- ═══ PROGRESS BAR ═══ -->
 <div id="slide-progress"><div id="slide-progress-bar"></div></div>
@@ -1275,11 +1358,17 @@ footer em{color:rgba(212,168,67,0.4);font-style:normal}
     <div class="slide" id="slide-3">
       <section id="trata" class="trata-section">
 
-        <!-- Video Background -->
+        <!-- Video Background (ping-pong: dos videos con crossfade) -->
         <div class="trata-video-bg">
-          <video id="trataBgVideo" autoplay muted playsinline preload="auto"
-            poster="https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg">
-            <source src="https://videos.pexels.com/video-files/32215011/13739319_1920_1080_30fps.mp4" type="video/mp4">
+          <video id="pp-vid-a" muted playsinline preload="auto"
+            poster="https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.8);transition:opacity 1.2s ease;opacity:1">
+            <source src="13739319_1920_1080_30fps.mp4" type="video/mp4">
+          </video>
+          <video id="pp-vid-b" muted playsinline preload="auto"
+            poster="https://www.un.org/sites/un2.un.org/files/2019/12/slave_trade_map_large.jpg"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.8);transition:opacity 1.2s ease;opacity:0">
+            <source src="13739319_1920_1080_30fps.mp4" type="video/mp4">
           </video>
         </div>
         <div class="trata-video-overlay"></div>
@@ -1728,47 +1817,6 @@ function responder(el, correcta){
 }
 
 /* ═════════════════════════════════════════
-   PING-PONG VIDEO — Trata background
-   Plays forward → reverses frame by frame → forward → ...
-   No loop restart = no visible cut
-═════════════════════════════════════════ */
-(function(){
-  const vid = document.getElementById('trataBgVideo');
-  if(!vid) return;
-
-  let goingForward = true;
-  let rafId = null;
-  const STEP = 1 / 30; // ~30 fps step in seconds
-
-  function reversePlay(){
-    if(vid.currentTime <= 0){
-      // Hit the start → go forward again
-      goingForward = true;
-      vid.play();
-      return;
-    }
-    vid.currentTime = Math.max(0, vid.currentTime - STEP);
-    rafId = requestAnimationFrame(reversePlay);
-  }
-
-  vid.addEventListener('ended', () => {
-    // Hit the end → go backward
-    goingForward = false;
-    vid.pause();
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(reversePlay);
-  });
-
-  // Clean up if slide changes (optional safety)
-  vid.addEventListener('play', () => {
-    if(!goingForward){
-      // Prevent accidental play during reverse phase
-      vid.pause();
-    }
-  });
-})();
-
-/* ═════════════════════════════════════════
    INIT
 ═════════════════════════════════════════ */
 updateUI();
@@ -1777,6 +1825,183 @@ updateUI();
 setTimeout(() => {
   document.querySelectorAll('#slide-0 .reveal').forEach(el => el.classList.add('visible'));
 }, 100);
+
+/* ═════════════════════════════════════════
+   PING-PONG VIDEO
+   Compatible con Safari/iPhone:
+   - Sin playbackRate negativo
+   - Dos videos con crossfade suave:
+     Vid A: 0→fin (forward)
+     Cuando termina → Vid B ya cargado al final,
+     busca hacia atrás frame a frame con rAF
+     mientras Vid A hace fade out
+   - Cuando B llega a 0 → vuelve a A (forward)
+═════════════════════════════════════════ */
+(function initPingPong(){
+  const vidA = document.getElementById('pp-vid-a');
+  const vidB = document.getElementById('pp-vid-b');
+  if(!vidA || !vidB) return;
+
+  // Estado: 'forward' = A jugando, 'reverse' = B retrocediendo
+  let phase = 'forward';  // 'forward' | 'reverse'
+  let rafId = null;
+  const STEP = 0.04; // segundos a retroceder por frame (~30fps)
+  const FADE_DURATION = 1200; // ms, igual que CSS transition
+
+  function setOpacity(a, b){
+    vidA.style.opacity = a;
+    vidB.style.opacity = b;
+  }
+
+  function stopRaf(){
+    if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  // --- Fase FORWARD: A juega hacia adelante ---
+  function startForward(){
+    phase = 'forward';
+    stopRaf();
+    vidA.currentTime = 0;
+    setOpacity(1, 0);
+    vidA.play().catch(()=>{});
+    // Preparar B al final para reverse
+    vidB.pause();
+  }
+
+  // Cuando A termina → crossfade a B que retrocede
+  vidA.addEventListener('ended', () => {
+    if(phase !== 'forward') return;
+    // Posicionar B al final
+    vidB.currentTime = vidA.duration || vidB.duration || 0;
+    // Crossfade: A fade out, B fade in
+    setOpacity(0, 1);
+    phase = 'reverse';
+    // Pequeña pausa para que la transición CSS se inicie
+    setTimeout(startReverse, 50);
+  });
+
+  // --- Fase REVERSE: B retrocede frame a frame ---
+  let lastTime = null;
+  function startReverse(){
+    lastTime = null;
+    rafId = requestAnimationFrame(reverseStep);
+  }
+
+  function reverseStep(ts){
+    if(phase !== 'reverse') return;
+    if(lastTime !== null){
+      const elapsed = (ts - lastTime) / 1000; // segundos
+      vidB.currentTime = Math.max(0, vidB.currentTime - elapsed);
+    }
+    lastTime = ts;
+
+    if(vidB.currentTime <= 0.05){
+      // Llegamos al inicio → crossfade de vuelta a A
+      stopRaf();
+      vidB.currentTime = 0;
+      setOpacity(1, 0);
+      setTimeout(startForward, FADE_DURATION * 0.3);
+      return;
+    }
+    rafId = requestAnimationFrame(reverseStep);
+  }
+
+  // Esperar a que los videos puedan reproducirse
+  function tryStart(){
+    startForward();
+  }
+
+  if(vidA.readyState >= 3){
+    tryStart();
+  } else {
+    vidA.addEventListener('canplay', tryStart, {once: true});
+    vidA.load();
+    vidB.load();
+  }
+})();
+
+/* ═════════════════════════════════════════
+   AUDIO CONTROL
+   - Arranca muted (supera restricciones móviles)
+   - Se desactiva el mute en primera interacción
+   - Botón para toggle manual
+═════════════════════════════════════════ */
+(function initAudio(){
+  const audio   = document.getElementById('bg-audio');
+  const btn     = document.getElementById('audio-btn');
+  const iconMuted   = document.getElementById('icon-muted');
+  const iconPlaying = document.getElementById('icon-playing');
+  if(!audio || !btn) return;
+
+  let userUnmuted = false; // true cuando el usuario ha dado permiso
+
+  // Intentar reproducir (muted para pasar autoplay policy)
+  audio.muted  = true;
+  audio.volume = 0.55;
+  audio.play().catch(() => {
+    // Autoplay bloqueado completamente — esperamos interacción
+  });
+
+  function setMuted(muted){
+    audio.muted = muted;
+    if(muted){
+      btn.classList.add('muted');
+      btn.classList.remove('playing');
+      iconMuted.style.display   = '';
+      iconPlaying.style.display = 'none';
+      btn.setAttribute('aria-label', 'Activar sonido');
+      btn.setAttribute('title', 'Activar sonido');
+    } else {
+      btn.classList.remove('muted');
+      btn.classList.add('playing');
+      iconMuted.style.display   = 'none';
+      iconPlaying.style.display = '';
+      btn.setAttribute('aria-label', 'Silenciar');
+      btn.setAttribute('title', 'Silenciar');
+    }
+  }
+
+  // Primera interacción: desmuteamos automáticamente
+  function onFirstInteraction(){
+    if(userUnmuted) return;
+    userUnmuted = true;
+    // Asegurar que el audio esté reproduciéndose
+    if(audio.paused){
+      audio.play().catch(()=>{});
+    }
+    setMuted(false);
+    // Remover listeners de primera interacción
+    ['click','keydown','touchstart','scroll'].forEach(ev => {
+      document.removeEventListener(ev, onFirstInteraction);
+    });
+  }
+
+  // Escuchar primera interacción
+  ['click','keydown','touchstart','scroll'].forEach(ev => {
+    document.addEventListener(ev, onFirstInteraction, {once:false, passive:true});
+  });
+
+  // Botón: toggle manual
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // no disparar onFirstInteraction con este click
+    if(!userUnmuted){
+      // Primer click en el botón: arrancar audio y desmutear
+      userUnmuted = true;
+      if(audio.paused) audio.play().catch(()=>{});
+      setMuted(false);
+      ['click','keydown','touchstart','scroll'].forEach(ev => {
+        document.removeEventListener(ev, onFirstInteraction);
+      });
+    } else {
+      // Toggle mute
+      setMuted(!audio.muted);
+    }
+  });
+
+  // Estado inicial visual
+  setMuted(true);
+})();
+
 </script>
 </body>
 </html>
